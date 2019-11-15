@@ -1,0 +1,90 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 offset-md-3">
+
+            <h2 class="text-center">{{title}}</h2>
+
+            <!-- Table to output data -->
+            <table class="table table-striped table-borderless ">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>NOMRES</th>
+                        <th>APELLIDOS</th>
+                        <th>CEDULA</th>
+                        <th>CORREO</th>
+                        <th>TELEFONO</th>
+                        <th>OPT</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of users">
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.nombres }}</td>
+                        <td>{{ user.apellidos }}</td>
+                        <td>{{ user.cedula }}</td>
+                        <td>{{ user.correo }}</td>
+                        <td>{{ user.telefono }}</td>
+                        <td>
+                            <!--<button (click)="deleteUser(user.id)" class="btn btn-danger">Delete</button>-->
+                            <button (click)="showUser(user.id)" class="btn btn-danger">Edit</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            
+
+            <form [formGroup]="userForm" (ngSubmit)="storeUser(userForm)">
+                
+                <input type="hidden"  name="id" formControlName="id">
+                
+                <div class="form-group">
+                    <label for="nombres">Nombres</label>
+                    <input type="text" class="form-control" name="nombres" formControlName="nombres" [ngClass]="{ 'is-invalid': submitted && f.nombres.errors }">
+                    <div *ngIf="submitted && f.nombres.errors" class="invalid-feedback">
+                        <div *ngIf="f.nombres.errors.required">Por favor, ingresa tus Nombres </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="apellidos">Apellidos</label>
+                    <input type="text" class="form-control" name="apellidos" formControlName="apellidos" [ngClass]="{ 'is-invalid': submitted && f.apellidos.errors }">
+                    <div *ngIf="submitted && f.apellidos.errors" class="invalid-feedback">
+                        <div *ngIf="f.apellidos.errors.required">Por favor, ingresa tus apellidos </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="cedula">Cedula</label>
+                    <input type="text" class="form-control" name="cedula" formControlName="cedula" inputmode="numeric"  title="Solo numeros" [ngClass]="{ 'is-invalid': submitted && f.cedula.errors }">
+                    <div *ngIf="submitted && f.cedula.errors" class="invalid-feedback">
+                        <div *ngIf="f.cedula.errors.required">Por favor, ingresa tu cedula </div>
+                        <div *ngIf="f.cedula.errors.pattern">Solo se permite números </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="correo">Correo</label>
+                    <input type="text" class="form-control" name="correo" formControlName="correo" [ngClass]="{ 'is-invalid': submitted && f.correo.errors }">
+                    <div *ngIf="submitted && f.correo.errors" class="invalid-feedback">
+                        <div *ngIf="f.correo.errors.required">El correo es obligatorio</div>
+                        <div *ngIf="f.correo.errors.email">Por favor, ingresa tu correo</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Telefono</label>
+                    <input type="text" class="form-control" name="telefono"  inputmode="numeric" formControlName="telefono" title="Solo numeros" [ngClass]="{ 'is-invalid': submitted && f.telefono.errors }">
+                    <div *ngIf="submitted && f.telefono.errors" class="invalid-feedback">
+                        <div *ngIf="f.telefono.errors.required">Por favor, ingresa tus teléfono </div>
+                        <div *ngIf="f.telefono.errors.pattern">Solo se permite números </div>
+                    </div>
+                </div>
+
+                <!-- Output the data on input -->
+                <!--<pre>{{userForm.value | json}}</pre>-->
+                
+                <button type="submit" class="btn btn-danger send-b">Add</button>
+                <button type="button" (click)="putUser(user.id)" class="btn btn-danger send-b">Update</button>
+            </form>
+
+        </div>    
+    </div>
+</div>
